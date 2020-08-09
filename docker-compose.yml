@@ -1,0 +1,25 @@
+version: '2'
+services:
+  travel_quotation_app:
+    image: node:12-alpine
+    container_name: travel_quotation_app
+    build: ./
+    command: "/bin/sh -c 'cd /app && npm i && npm run start-app'"
+    volumes:
+      - ./:/app
+    ports:
+      - "4001:4001"
+    networks:
+      travel_quotation_net:
+        ipv4_address: 172.41.0.2
+networks:
+  travel_quotation_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.41.0.0/16
+          gateway: 172.41.0.1
+volumes:
+  appdata:
+    driver: local
