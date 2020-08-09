@@ -5,15 +5,29 @@
   "main": "./src/api/index.js",
   "scripts": {
     "start-api": "node ./src/api/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --colors",
     "get-best-travel-quotation": "node ./src/scripts/get-best-travel-quotation.js"
   },
   "author": "Romulo Pransteter da Silva",
   "license": "SEE LICENSE IN LICENSE.txt",
+  "type": "module",
   "devDependencies": {
+    "@sucrase/jest-plugin": "^2.0.0",
     "eslint": "^7.6.0",
     "eslint-config-google": "^0.14.0",
     "jest": "^26.2.2"
   },
-  "type": "module"
+  "jest": {
+    "testEnvironment": "node",
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(js?)$",
+    "collectCoverage": true,
+    "verbose": true,
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/api/index.js"
+    ],
+    "transform": {
+      ".(js)": "@sucrase/jest-plugin"
+    }
+  }
 }
