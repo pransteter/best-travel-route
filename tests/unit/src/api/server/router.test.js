@@ -1,4 +1,4 @@
-import {Router} from '../../../../src/api/server/Router';
+import {Router} from '../../../../../src/api/server/Router.js';
 
 describe('Router class test', () => {
   it('Applying routes method', () => {
