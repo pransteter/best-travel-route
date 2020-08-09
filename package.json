@@ -9,5 +9,9 @@
     "get-best-travel-quotation": "node ./src/scripts/get-best-travel-quotation.js"
   },
   "author": "Romulo Pransteter da Silva",
-  "license": "SEE LICENSE IN LICENSE.txt"
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "devDependencies": {
+    "eslint": "^7.6.0",
+    "eslint-config-google": "^0.14.0"
+  }
 }
