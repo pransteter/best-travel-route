@@ -12,7 +12,8 @@
   "license": "SEE LICENSE IN LICENSE.txt",
   "devDependencies": {
     "eslint": "^7.6.0",
-    "eslint-config-google": "^0.14.0"
+    "eslint-config-google": "^0.14.0",
+    "jest": "^26.2.2"
   },
   "type": "module"
 }
