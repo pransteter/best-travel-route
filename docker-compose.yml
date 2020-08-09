@@ -4,7 +4,7 @@ services:
     image: node:12-alpine
     container_name: travel_quotation_app
     build: ./
-    command: "/bin/sh -c 'cd /app && npm i && npm run start-app'"
+    command: "/bin/sh -c 'cd /app && npm i && npm run start-api'"
     volumes:
       - ./:/app
     ports:
