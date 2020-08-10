@@ -24,7 +24,7 @@
     "verbose": true,
     "collectCoverageFrom": [
       "src/**/*.js",
-      "!src/api/index.js"
+      "!**/src/api/**"
     ],
     "transform": {
       ".(js)": "@sucrase/jest-plugin"

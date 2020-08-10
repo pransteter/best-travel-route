@@ -33,6 +33,8 @@ export class Server {
    * @return {net.Server}
    */
   createServer() {
-    return _createServer(this.router.apply);
+    return _createServer((req, res) => {
+      this.router.applyRoutes(req, res);
+    });
   }
 }
