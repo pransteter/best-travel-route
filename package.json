@@ -13,13 +13,14 @@
   "type": "module",
   "devDependencies": {
     "@sucrase/jest-plugin": "^2.0.0",
+    "axios": "^0.19.2",
     "eslint": "^7.6.0",
     "eslint-config-google": "^0.14.0",
     "jest": "^26.2.2"
   },
   "jest": {
     "testEnvironment": "node",
-    "testRegex": "(/__unit-tests__/.*|(\\.|/)(test|spec))\\.(js?)$",
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(js?)$",
     "collectCoverage": true,
     "verbose": true,
     "collectCoverageFrom": [
