@@ -1,5 +1,5 @@
 /**
- * Route class (abstract)
+ * Route class
  */
 export class Route {
   /**
@@ -14,7 +14,6 @@ export class Route {
 
   /**
    * apply method
-   * Used to apply a behaviour by rest path and method.
    * @param {Request} req
    * @param {Response} res
    */

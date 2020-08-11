@@ -8,12 +8,10 @@ import {Route} from '../routes/Route.js';
 
 /**
  * Router class
- * Used to set endpoints and respective controllers
  */
 export class Router {
   /**
-   * apply method (public)
-   * Used to apply routes
+   * apply method
    * @param {Request} req
    * @param {Response} res
    */
@@ -25,7 +23,7 @@ export class Router {
   }
 
   /**
-   * finish method (private)
+   * finish method
    * Used to finish an API response
    * @param {Response} res
    */
@@ -41,8 +39,7 @@ export class Router {
   }
 
   /**
-   * add method (private)
-   * Used to add and apply a new route instance
+   * add method
    * @param {Route} route
    * @param {Request} req
    * @param {Response} res

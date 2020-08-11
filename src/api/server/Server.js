@@ -2,12 +2,10 @@ import {createServer as _createServer} from 'http';
 
 /**
  * Server class
- * Used to provide an API Server;
  */
 export class Server {
   /**
    * constructor method
-   * Used to initialize scope properties.
    * @param {Router} router
    */
   constructor(router) {
@@ -17,7 +15,6 @@ export class Server {
 
   /**
    * start method
-   * Used to start the API Server.
    */
   start() {
     const server = this.createServer();
@@ -29,7 +26,6 @@ export class Server {
 
   /**
    * createServer method
-   * Used to create a http server.
    * @return {net.Server}
    */
   createServer() {

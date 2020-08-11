@@ -4,7 +4,6 @@
 export class TravelQuotationController {
   /**
    * getBestQuotation method
-   * Used to get the best travel quotation
    * @param {Request} req
    * @param {Response} res
    */

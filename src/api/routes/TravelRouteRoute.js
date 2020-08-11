@@ -17,7 +17,6 @@ export class TravelRouteRoute extends Route {
 
   /**
    * apply method
-   * Used to apply a behaviour by rest path and method.
    * @param {Request} req
    * @param {Response} res
    */
