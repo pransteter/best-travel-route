@@ -11,4 +11,13 @@ export class Route {
     this.pathname = pathname;
     this.method = method;
   }
+
+  /**
+   * apply method
+   * Used to apply a behaviour by rest path and method.
+   * @param {Request} req
+   * @param {Response} res
+   */
+  apply(req, res) {
+  }
 }

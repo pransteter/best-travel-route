@@ -9,6 +9,8 @@ export class TravelRouteController {
    * @param {Response} res
    */
   insertNewRoute(req, res) {
+    // use only repositories here
+
     res.statusCode = 204;
     res.end();
     return;

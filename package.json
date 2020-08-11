@@ -19,7 +19,7 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(js?)$",
+    "testRegex": "(/__unit-tests__/.*|(\\.|/)(test|spec))\\.(js?)$",
     "collectCoverage": true,
     "verbose": true,
     "collectCoverageFrom": [
