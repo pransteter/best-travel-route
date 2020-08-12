@@ -23,6 +23,7 @@
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(js?)$",
     "collectCoverage": true,
     "verbose": true,
+    "automock": false,
     "collectCoverageFrom": [
       "src/**/*.js",
       "!**/src/api/**"

@@ -3,20 +3,20 @@
  */
 export class Adapter {
   /**
-   * select method
-   * @param {array} columns
-   * @return {self}
+   * constructor method
+   * @param {string} origin
    */
-  select(columns) {
-    return this;
+  constructor(origin) {
+    this.origin = origin;
+    this.fromClausule = '';
   }
-
   /**
    * from method
    * @param {string} place
    * @return {self}
    */
   from(place) {
+    this.fromClausule = place;
     return this;
   }
 
@@ -26,13 +26,5 @@ export class Adapter {
    */
   fetchAll() {
     return this.execute();
-  }
-
-  /**
-   * execute method
-   * @return {array}
-   */
-  execute() {
-    return [];
   }
 }
