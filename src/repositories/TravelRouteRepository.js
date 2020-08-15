@@ -15,9 +15,25 @@ export class TravelRouteRepository {
    * @return {array}
    */
   getAllRoutes() {
-    return this.adapter
-        .select('*')
-        .from('travel-routes')
+    const rawRoutes = this.adapter
+        .from('mock-file.csv')
         .fetchAll();
+
+    return rawRoutes.map(this.buildRoute);
+  }
+
+  /**
+   * buildRoute method
+   * @param {string} rawRoute
+   * @return {object}
+   */
+  buildRoute(rawRoute) {
+    const routeValues = rawRoute.split(',');
+
+    return {
+      from: routeValues[0].trim(),
+      to: routeValues[1].trim(),
+      price: Number(routeValues[2].trim()),
+    };
   }
 }

@@ -7,7 +7,7 @@ export class PossibilitiesAlgorithm {
    */
   constructor() {
     this.routes = [];
-    this.possibilities = {};
+    this.possibilities = [];
   }
   /**
    * setAllRoutes method
@@ -26,7 +26,7 @@ export class PossibilitiesAlgorithm {
 
   /**
    * getPossibilities method
-   * @return {object}
+   * @return {array}
    */
   getPossibilities() {
     this.generatePossibilities();

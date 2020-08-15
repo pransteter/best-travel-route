@@ -30,9 +30,9 @@ describe('TraveQuotation context', () => {
   it('Get best travel - success', () => {
     const from = 'GRU';
     const to = 'BRC';
-    repositoryMock.getAllRoutes.mockReturnValue('GRU,BRC,10');
+    repositoryMock.getAllRoutes.mockReturnValue(['GRU,BRC,10']);
     keepLastPointPossibilitiesAlgorithm.getPossibilities.mockReturnValue(
-        {'GRU,BRC': 10}
+        [{'GRU,BRC': 10}]
     );
     bestPriceElectionAlgorithm.getElected.mockReturnValue('GRU - BRC > $10');
 

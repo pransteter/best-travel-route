@@ -10,6 +10,7 @@ export class Adapter {
     this.origin = origin;
     this.fromClausule = '';
   }
+
   /**
    * from method
    * @param {string} place
