@@ -12,8 +12,7 @@ export class KeepLastPointPossibilitiesAlgorithm
     super();
     this.firstPoint = '';
     this.lastPoint = '';
-    this.scalePossibilities = [];
-    this.currentPossibilityIndex = 0;
+    this.incompletePossibilities = [];
   }
 
   /**
@@ -34,8 +33,9 @@ export class KeepLastPointPossibilitiesAlgorithm
 
   /**
    * generatePossibilities method
+   * @return {Promise<void>}
    */
-  generatePossibilities() {
+  async generatePossibilities() {
     const firstPossibilities = this.generateFirstPossibilities(
         this.firstPoint,
         this.lastPoint
@@ -49,7 +49,7 @@ export class KeepLastPointPossibilitiesAlgorithm
     }
 
     this.possibilities = firstPossibilities.direct;
-    console.log(this.possibilities);
+
     if (
       firstPossibilities.scale.length <= 0 &&
       firstPossibilities.direct.length > 0
@@ -57,10 +57,11 @@ export class KeepLastPointPossibilitiesAlgorithm
       return;
     }
 
-    this.currentPossibilityIndex = this.possibilities.length + 1;
-    this.scalePossibilities = firstPossibilities.scale;
+    const streams = this.createStreamsToGetAllScalePossibilities(
+        firstPossibilities.scale
+    );
 
-    this.generateScalePossibilitiesRecursively();
+    await Promise.all(streams);
   }
 
   /**
@@ -89,72 +90,83 @@ export class KeepLastPointPossibilitiesAlgorithm
   }
 
   /**
+   * createStreamsToGetAllScalePossibilities method
+   * @param {array} scalePossibilities
+   * @return {array}
+   */
+  createStreamsToGetAllScalePossibilities(scalePossibilities) {
+    const streams = [];
+
+    for (let index = 0; index < scalePossibilities.length; index++) {
+      const possibility = scalePossibilities[index];
+      streams.push(new Promise((resolve) => {
+        this.generateScalePossibilitiesRecursively(possibility, index);
+        resolve();
+      }));
+    }
+
+    return streams;
+  }
+
+  /**
    * generateScalePossibilitiesRecursively method
    * @param {array} scalePossibilities
-   * @param {number} possibilityIndex
+   * @param {number} streamId
    * @return {void}
    */
-  generateScalePossibilitiesRecursively(scalePossibilities) {
-    const possibilities = scalePossibilities || this.scalePossibilities;
-
-    for (const route of possibilities) {
+  generateScalePossibilitiesRecursively(
+      scalePossibilities,
+      streamId
+  ) {
+    for (const route of scalePossibilities) {
       const firstPossibilities = this.generateFirstPossibilities(
           this.firstPoint,
           route.from
       );
 
-      this.attachDirectRoutes(route, firstPossibilities.direct);
+      this.attachDirectRoutes(route, firstPossibilities.direct, streamId);
 
       if (firstPossibilities.scale.length > 0) {
-        this.attachIncompleteRoutes(route);
+        this.attachIncompleteRoutes(route, streamId);
         this.generateScalePossibilitiesRecursively(
-            firstPossibilities.scale
+            firstPossibilities.scale,
+            streamId
         );
       }
     }
   }
 
   /**
-   *
+   * attachDirectRoutes method
    * @param {object} currentRoute
    * @param {array} directRoutes
-   * @param {number} possibilityIndex
+   * @param {number} incompleteStreamIndex
    */
-  attachDirectRoutes(currentRoute, directRoutes) {
+  attachDirectRoutes(currentRoute, directRoutes, incompleteStreamIndex) {
     if (directRoutes.length <= 0) {
       return;
     }
 
-    const possibilitiesToIncrement = [currentRoute].concat(directRoutes);
+    const pastRoutes = this.incompletePossibilities[incompleteStreamIndex] || [];
+    pastRoutes.push(currentRoute);
+    const possibilitiesToIncrement = pastRoutes.concat(directRoutes);
 
-    if (this.possibilities[this.currentPossibilityIndex]) {
-      this.possibilities[
-          this.currentPossibilityIndex
-      ] = this.possibilities[this.currentPossibilityIndex]
-          .concat(
-              possibilitiesToIncrement
-          );
-      return;
-    }
-
-    this.possibilities[this.currentPossibilityIndex] = possibilitiesToIncrement;
-    this.currentPossibilityIndex += 1;
+    this.possibilities.push(possibilitiesToIncrement);
   }
 
   /**
    * attachScaleRoutes method
    * @param {object} currentRoute
-   * @param {array} scaleRoutes
+   * @param {array} streamIndex
    */
-  attachIncompleteRoutes(currentRoute) {
-    if (!this.possibilities[this.currentPossibilityIndex]) {
-      this.possibilities[this.currentPossibilityIndex] = [currentRoute];
+  attachIncompleteRoutes(currentRoute, streamIndex) {
+    if (!this.incompletePossibilities[streamIndex]) {
+      this.possibilities[streamIndex] = [currentRoute];
       return;
     }
 
     this.possibilities[
-        this.currentPossibilityIndex
-    ] = this.possibilities[this.currentPossibilityIndex]
-        .concat([currentRoute]);
+        streamIndex
+    ].push(currentRoute);
   }
 }

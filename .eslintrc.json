@@ -5,11 +5,11 @@
     "jest": true
   },
   "parserOptions": {
-    "sourceType": "module"
+    "sourceType": "module",
+    "ecmaVersion": 2017
   },
   "extends": [
-    "eslint:recommended",
-    "google"
+    "eslint:recommended"
   ],
   "ignorePatterns": [
     "**/node_modules/**",

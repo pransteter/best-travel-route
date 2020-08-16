@@ -3,22 +3,26 @@ import {KeepLastPointPossibilitiesAlgorithm}
   // eslint-disable-next-line max-len
   from '../../../../src/contexts/travel-quotation/algorithms/KeepLastPointPossibilitiesAlgorithm';
 
-describe('PossibilitiesAlgorithm', () => {
+describe.only('KeepLastPointPossibilitiesAlgorithm', () => {
   it('get all possibilities - simple case', () => {
     const algorithm = new KeepLastPointPossibilitiesAlgorithm();
     algorithm.setAllRoutes([
-      'GRU,BRC,10',
-      'BRC,SCL,5',
-      'GRU,CDG,75',
-      'GRU,SCL,20',
-      'GRU,ORL,56',
-      'ORL,CDG,5',
-      'SCL,ORL,20',
+      {from: 'GRU', to: 'BRC', price: 10},
+      {from: 'BRC', to: 'SCL', price: 5},
+      {from: 'GRU', to: 'CDG', price: 75},
+      {from: 'GRU', to: 'SCL', price: 20},
+      {from: 'GRU', to: 'ORL', price: 56},
+      {from: 'ORL', to: 'CDG', price: 5},
+      {from: 'SCL', to: 'ORL', price: 20},
     ]);
     algorithm.setFirstPoint('GRU');
     algorithm.setLastPoint('BRC');
     const result = algorithm.getPossibilities();
 
-    expect(result).toEqual([{'GRU,BRC': 10}]);
+    expect(result).toEqual([{
+      from: 'GRU',
+      to: 'BRC',
+      price: 10
+    }]);
   });
 });
