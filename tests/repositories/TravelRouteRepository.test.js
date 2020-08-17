@@ -1,5 +1,5 @@
 const {TravelRouteRepository} = require(
-    '../../src/repositories/TravelRouteRepository'
+    '../../src/repositories/TravelRouteRepository',
 );
 
 describe('TravelRouteRepository', () => {
@@ -41,7 +41,7 @@ describe('TravelRouteRepository', () => {
       {from: 'SCL', to: 'ORL', price: 20},
     ]);
     expect(adapterMock.from).toHaveBeenCalledTimes(1);
-    expect(adapterMock.from).toHaveBeenCalledWith('mock-file.csv');
+    expect(adapterMock.from).toHaveBeenCalledWith('travel-routes.csv');
     expect(adapterMock.fetchAll).toHaveBeenCalledTimes(1);
   });
 });

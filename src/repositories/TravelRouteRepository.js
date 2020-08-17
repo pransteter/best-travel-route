@@ -16,7 +16,7 @@ export class TravelRouteRepository {
    */
   getAllRoutes() {
     const rawRoutes = this.adapter
-        .from('mock-file.csv')
+        .from('travel-routes.csv')
         .fetchAll();
 
     return rawRoutes.map(this.buildRoute);

@@ -10,13 +10,13 @@ api-server-up: ## Turn on the API server
 	docker-compose up -d
 
 test: ## Run all tests
-	docker-compose run travel_quotation_app npm run test
+	docker-compose exec travel_quotation_app npm run test
 
 down: ## Turn off the docker environment
 	docker-compose down -v
 
 style-check: ## Check style errors with ESLint
-	docker-compose run travel_quotation_app sh -c './node_modules/.bin/eslint . --ext .js'
+	docker-compose exec travel_quotation_app sh -c './node_modules/.bin/eslint . --ext .js'
 
 style-fix: ## Fix style errors with ESLint
-	docker-compose run travel_quotation_app sh -c './node_modules/.bin/eslint . --ext .js --fix'
+	docker-compose exec travel_quotation_app sh -c './node_modules/.bin/eslint . --ext .js --fix'

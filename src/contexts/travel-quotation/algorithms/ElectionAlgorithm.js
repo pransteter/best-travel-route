@@ -7,7 +7,8 @@ export class ElectionAlgorithm {
    */
   constructor() {
     this.possibilities = [];
-    this.elected = '';
+    this.elected = [];
+    this.price = 0;
   }
 
   /**
@@ -31,6 +32,9 @@ export class ElectionAlgorithm {
    */
   getElected() {
     this.electOne();
-    return this.elected;
+    return {
+      route: this.elected,
+      price: this.price,
+    };
   }
 }

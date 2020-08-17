@@ -1,4 +1,4 @@
-import {Adapter} from './Adapter';
+import {Adapter} from './Adapter.js';
 import * as fs from 'fs';
 
 /**
@@ -15,7 +15,7 @@ export class CsvAdapter extends Adapter {
     const wholeData = fs.readFileSync(
         `${this.origin}${this.fromClausule}`,
         'utf8',
-        (err, data) => err ? '' : data
+        (err, data) => err ? '' : data,
     );
 
     data = wholeData.split(/\r?\n/);

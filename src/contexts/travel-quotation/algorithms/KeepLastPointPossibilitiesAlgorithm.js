@@ -1,4 +1,4 @@
-import {PossibilitiesAlgorithm} from './PossibilitiesAlgorithm';
+import {PossibilitiesAlgorithm} from './PossibilitiesAlgorithm.js';
 
 /**
  * KeepLastPointPossibilitiesAlgorithm class
@@ -12,7 +12,7 @@ export class KeepLastPointPossibilitiesAlgorithm
     super();
     this.firstPoint = '';
     this.lastPoint = '';
-    this.incompletePossibilities = [];
+    this.incompleteScalePossibilities = [];
   }
 
   /**
@@ -38,7 +38,7 @@ export class KeepLastPointPossibilitiesAlgorithm
   async generatePossibilities() {
     const firstPossibilities = this.generateFirstPossibilities(
         this.firstPoint,
-        this.lastPoint
+        this.lastPoint,
     );
 
     if (
@@ -48,7 +48,7 @@ export class KeepLastPointPossibilitiesAlgorithm
       return;
     }
 
-    this.possibilities = firstPossibilities.direct;
+    this.possibilities.push(firstPossibilities.direct);
 
     if (
       firstPossibilities.scale.length <= 0 &&
@@ -58,7 +58,7 @@ export class KeepLastPointPossibilitiesAlgorithm
     }
 
     const streams = this.createStreamsToGetAllScalePossibilities(
-        firstPossibilities.scale
+        firstPossibilities.scale,
     );
 
     await Promise.all(streams);
@@ -100,7 +100,7 @@ export class KeepLastPointPossibilitiesAlgorithm
     for (let index = 0; index < scalePossibilities.length; index++) {
       const possibility = scalePossibilities[index];
       streams.push(new Promise((resolve) => {
-        this.generateScalePossibilitiesRecursively(possibility, index);
+        this.generateScalePossibilitiesRecursively([possibility], index);
         resolve();
       }));
     }
@@ -116,21 +116,24 @@ export class KeepLastPointPossibilitiesAlgorithm
    */
   generateScalePossibilitiesRecursively(
       scalePossibilities,
-      streamId
+      streamId,
   ) {
     for (const route of scalePossibilities) {
       const firstPossibilities = this.generateFirstPossibilities(
           this.firstPoint,
-          route.from
+          route.from,
       );
 
-      this.attachDirectRoutes(route, firstPossibilities.direct, streamId);
+      this.attachCompleteScaleRoutes(
+          route,
+          firstPossibilities.direct, streamId,
+      );
 
       if (firstPossibilities.scale.length > 0) {
-        this.attachIncompleteRoutes(route, streamId);
+        this.attachIncompleteScaleRoutes(route, streamId);
         this.generateScalePossibilitiesRecursively(
             firstPossibilities.scale,
-            streamId
+            streamId,
         );
       }
     }
@@ -142,16 +145,21 @@ export class KeepLastPointPossibilitiesAlgorithm
    * @param {array} directRoutes
    * @param {number} incompleteStreamIndex
    */
-  attachDirectRoutes(currentRoute, directRoutes, incompleteStreamIndex) {
+  attachCompleteScaleRoutes(currentRoute, directRoutes, incompleteStreamIndex) {
     if (directRoutes.length <= 0) {
       return;
     }
 
-    const pastRoutes = this.incompletePossibilities[incompleteStreamIndex] || [];
+    const pastRoutes = this.incompleteScalePossibilities[
+        incompleteStreamIndex
+    ] || [];
     pastRoutes.push(currentRoute);
     const possibilitiesToIncrement = pastRoutes.concat(directRoutes);
 
+    possibilitiesToIncrement.reverse();
+
     this.possibilities.push(possibilitiesToIncrement);
+    delete this.incompleteScalePossibilities[incompleteStreamIndex];
   }
 
   /**
@@ -159,13 +167,13 @@ export class KeepLastPointPossibilitiesAlgorithm
    * @param {object} currentRoute
    * @param {array} streamIndex
    */
-  attachIncompleteRoutes(currentRoute, streamIndex) {
-    if (!this.incompletePossibilities[streamIndex]) {
-      this.possibilities[streamIndex] = [currentRoute];
+  attachIncompleteScaleRoutes(currentRoute, streamIndex) {
+    if (!this.incompleteScalePossibilities[streamIndex]) {
+      this.incompleteScalePossibilities[streamIndex] = [currentRoute];
       return;
     }
 
-    this.possibilities[
+    this.incompleteScalePossibilities[
         streamIndex
     ].push(currentRoute);
   }

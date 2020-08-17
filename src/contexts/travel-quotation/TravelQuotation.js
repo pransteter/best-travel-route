@@ -36,7 +36,7 @@ export class TravelQuotation {
   getBestQuotation(from, to) {
     if (this.possibilitiesAlgorithm === null) {
       throw new Error(
-          'There is no possibilities algorithm to get possibilities.'
+          'There is no possibilities algorithm to get possibilities.',
       );
     }
 

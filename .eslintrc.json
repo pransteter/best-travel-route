@@ -9,7 +9,8 @@
     "ecmaVersion": 2017
   },
   "extends": [
-    "eslint:recommended"
+    "eslint:recommended",
+    "google"
   ],
   "ignorePatterns": [
     "**/node_modules/**",

@@ -1,4 +1,4 @@
-const {CsvAdapter} = require('../../src/adapters/CsvAdapter');
+import {CsvAdapter} from '../../src/adapters/CsvAdapter';
 
 describe('CsvAdapter', () => {
   it('Read a csv - success', () => {
@@ -26,7 +26,7 @@ describe('CsvAdapter', () => {
       adapter.from('mock-file.csv')
           .fetchAll();
     }).toThrowError(
-        `${errorMessagePrefix} 'any-folder/adapters/mock-file.csv'`
+        `${errorMessagePrefix} 'any-folder/adapters/mock-file.csv'`,
     );
   });
 });
