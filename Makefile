@@ -20,3 +20,7 @@ style-check: ## Check style errors with ESLint
 
 style-fix: ## Fix style errors with ESLint
 	docker-compose exec travel_quotation_app sh -c './node_modules/.bin/eslint . --ext .js --fix'
+
+get-best-travel-quotation: ## Command to get best travel quotation
+	@read -p "please enter the route:" routeForCheck; \
+	docker-compose exec travel_quotation_app npm run get-best-travel-quotation --routeForCheck=$$routeForCheck --silent
