@@ -6,14 +6,14 @@ import * as fs from 'fs';
  */
 export class CsvAdapter extends Adapter {
   /**
-   * execute method
+   * executeFetchAll method
    * @return {array}
    */
-  execute() {
+  executeFetchAll() {
     let data = [];
 
     const wholeData = fs.readFileSync(
-        `${this.origin}${this.fromClausule}`,
+        `${this.origin}${this.target}`,
         'utf8',
         (err, data) => err ? '' : data,
     );
@@ -21,5 +21,20 @@ export class CsvAdapter extends Adapter {
     data = wholeData.split(/\r?\n/);
 
     return data;
+  }
+
+  /**
+   * executeSave method
+   * @param {string} route
+   * @return {boolean}
+   */
+  executeSave(route) {
+    fs.appendFileSync(
+        `${this.origin}${this.target}`,
+        `\r\n${route}`,
+        'utf8',
+    );
+
+    return true;
   }
 }

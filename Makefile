@@ -7,6 +7,7 @@ build: ## Build docker environment
 	docker-compose build
 
 api-server-up: ## Turn on the API server
+	sudo cp $(data_file_path) ./database-files/travel-routes.csv && \
 	docker-compose up -d
 
 test: ## Run all tests

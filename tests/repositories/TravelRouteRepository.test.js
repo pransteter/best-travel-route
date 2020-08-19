@@ -4,12 +4,12 @@ const {TravelRouteRepository} = require(
 
 describe('TravelRouteRepository', () => {
   const adapterMock = {
-    from: jest.fn(),
+    setTarget: jest.fn(),
     fetchAll: jest.fn(),
   };
 
   beforeEach(() => {
-    adapterMock.from.mockReset();
+    adapterMock.setTarget.mockReset();
     adapterMock.fetchAll.mockReset();
   });
 
@@ -24,7 +24,7 @@ describe('TravelRouteRepository', () => {
       'SCL,ORL,20',
     ];
 
-    adapterMock.from.mockReturnThis();
+    adapterMock.setTarget.mockReturnThis();
     adapterMock.fetchAll.mockReturnValue(fetchAllResult);
 
     const repository = new TravelRouteRepository(adapterMock);
@@ -40,8 +40,8 @@ describe('TravelRouteRepository', () => {
       {from: 'ORL', to: 'CDG', price: 5},
       {from: 'SCL', to: 'ORL', price: 20},
     ]);
-    expect(adapterMock.from).toHaveBeenCalledTimes(1);
-    expect(adapterMock.from).toHaveBeenCalledWith('travel-routes.csv');
+    expect(adapterMock.setTarget).toHaveBeenCalledTimes(1);
+    expect(adapterMock.setTarget).toHaveBeenCalledWith('travel-routes.csv');
     expect(adapterMock.fetchAll).toHaveBeenCalledTimes(1);
   });
 });

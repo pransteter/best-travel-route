@@ -14,10 +14,11 @@ export class Router {
    * apply method
    * @param {Request} req
    * @param {Response} res
+   * @param {json} body
    */
-  applyRoutes(req, res) {
-    this.add(new TravelQuotationRoute(req.url, req.method), req, res);
-    this.add(new TravelRouteRoute(req.url, req.method), req, res);
+  applyRoutes(req, res, body) {
+    this.add(new TravelQuotationRoute(req.url, req.method), req, res, body);
+    this.add(new TravelRouteRoute(req.url, req.method), req, res, body);
 
     this.finish(res);
   }
@@ -43,8 +44,9 @@ export class Router {
    * @param {Route} route
    * @param {Request} req
    * @param {Response} res
+   * @param {json} body
    */
-  add(route, req, res) {
+  add(route, req, res, body) {
     if (res.writableEnded) {
       return;
     }
@@ -53,6 +55,6 @@ export class Router {
       return;
     }
 
-    route.apply(req, res);
+    route.apply(req, res, body);
   }
 }

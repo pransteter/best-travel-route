@@ -21,8 +21,9 @@ export class TravelQuotationRoute extends Route {
    * apply method
    * @param {Request} req
    * @param {Response} res
+   * @param {string} body
    */
-  apply(req, res) {
+  apply(req, res, body) {
     if (this.method === 'GET' && this.pathname === this.expectedPathname) {
       new TravelQuotationController().getBestQuotation(
           req,

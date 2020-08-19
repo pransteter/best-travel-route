@@ -16,7 +16,7 @@ export class TravelRouteRepository {
    */
   getAllRoutes() {
     const rawRoutes = this.adapter
-        .from('travel-routes.csv')
+        .setTarget('travel-routes.csv')
         .fetchAll();
 
     return rawRoutes.map(this.buildRoute);
@@ -35,5 +35,24 @@ export class TravelRouteRepository {
       to: routeValues[1].trim(),
       price: Number(routeValues[2].trim()),
     };
+  }
+
+  /**
+   * save method
+   * @param {object} route
+   * @return {boolean}
+   */
+  save(route) {
+    const rawRoute = `${route.from},${route.to},${route.price}`;
+
+    try {
+      this.adapter
+          .setTarget('travel-routes.csv')
+          .save(rawRoute);
+      return true;
+    } catch (err) {
+      console.error(err);
+      return false;
+    }
   }
 }

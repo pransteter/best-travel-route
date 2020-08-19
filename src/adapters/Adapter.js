@@ -8,16 +8,16 @@ export class Adapter {
    */
   constructor(origin) {
     this.origin = origin;
-    this.fromClausule = '';
+    this.target = '';
   }
 
   /**
-   * from method
-   * @param {string} place
+   * setTarget method
+   * @param {string} target
    * @return {self}
    */
-  from(place) {
-    this.fromClausule = place;
+  setTarget(target) {
+    this.target = target;
     return this;
   }
 
@@ -26,6 +26,15 @@ export class Adapter {
    * @return {array}
    */
   fetchAll() {
-    return this.execute();
+    return this.executeFetchAll();
+  }
+
+  /**
+   * save method
+   * @param {*} data
+   * @return {boolean}
+   */
+  save(data) {
+    return this.executeSave(data);
   }
 }

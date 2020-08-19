@@ -4,7 +4,7 @@ describe('CsvAdapter', () => {
   it('Read a csv - success', () => {
     const adapter = new CsvAdapter('tests/adapters/');
 
-    const result = adapter.from('mock-file.csv')
+    const result = adapter.setTarget('mock-file.csv')
         .fetchAll();
     expect(result).toEqual([
       'GRU,BRC,10',
@@ -23,7 +23,7 @@ describe('CsvAdapter', () => {
     const errorMessagePrefix = 'ENOENT: no such file or directory, open';
 
     expect(() => {
-      adapter.from('mock-file.csv')
+      adapter.setTarget('mock-file.csv')
           .fetchAll();
     }).toThrowError(
         `${errorMessagePrefix} 'any-folder/adapters/mock-file.csv'`,

@@ -9,6 +9,7 @@ export class TravelRouteRoute extends Route {
    * constructor method
    * @param {string} pathname
    * @param {string} method
+   * @param {json} body
    */
   constructor(pathname, method) {
     super(pathname, method);
@@ -19,10 +20,11 @@ export class TravelRouteRoute extends Route {
    * apply method
    * @param {Request} req
    * @param {Response} res
+   * @param {json} body
    */
-  apply(req, res) {
+  apply(req, res, body) {
     if (this.method === 'POST' && this.pathname === this.expectedPathname) {
-      new TravelRouteController().insertNewRoute(req, res);
+      new TravelRouteController().insertNewRoute(req, res, body);
       return;
     }
   }

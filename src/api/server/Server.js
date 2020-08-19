@@ -30,7 +30,14 @@ export class Server {
    */
   createServer() {
     return _createServer((req, res) => {
-      this.router.applyRoutes(req, res);
+      let body = '';
+
+      req.on('data', (chunk) => {
+        body += chunk.toString();
+      });
+      req.on('end', () => {
+        this.router.applyRoutes(req, res, body);
+      });
     });
   }
 }
