@@ -11,7 +11,9 @@ api-server-up: ## Turn on the API server
 	docker-compose up -d
 
 test: ## Run all tests
-	docker-compose exec travel_quotation_app npm run test
+	touch ./database-files/travel-routes-test.csv && \
+	docker-compose exec travel_quotation_app npm run test && \
+	rm ./database-files/travel-routes-test.csv
 
 down: ## Turn off the docker environment
 	docker-compose down -v

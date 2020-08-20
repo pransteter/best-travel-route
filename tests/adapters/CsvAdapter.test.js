@@ -29,4 +29,12 @@ describe('CsvAdapter', () => {
         `${errorMessagePrefix} 'any-folder/adapters/mock-file.csv'`,
     );
   });
+
+  it('Save a route in csv - success', () => {
+    const adapter = new CsvAdapter('database-files/');
+
+    const result = adapter.setTarget('travel-routes-test.csv')
+        .save('');
+    expect(result).toEqual(true);
+  });
 });

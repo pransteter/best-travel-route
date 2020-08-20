@@ -43,15 +43,14 @@ export class TravelRouteRepository {
    * @return {boolean}
    */
   save(route) {
-    const rawRoute = `${route.from},${route.to},${route.price}`;
-
     try {
+      const rawRoute = `${route.from},${route.to},${route.price}`;
+
       this.adapter
           .setTarget('travel-routes.csv')
           .save(rawRoute);
       return true;
     } catch (err) {
-      console.error(err);
       return false;
     }
   }

@@ -6,11 +6,13 @@ describe('TravelRouteRepository', () => {
   const adapterMock = {
     setTarget: jest.fn(),
     fetchAll: jest.fn(),
+    save: jest.fn(),
   };
 
   beforeEach(() => {
     adapterMock.setTarget.mockReset();
     adapterMock.fetchAll.mockReset();
+    adapterMock.save.mockReset();
   });
 
   it('getAllRoutes', () => {
@@ -43,5 +45,41 @@ describe('TravelRouteRepository', () => {
     expect(adapterMock.setTarget).toHaveBeenCalledTimes(1);
     expect(adapterMock.setTarget).toHaveBeenCalledWith('travel-routes.csv');
     expect(adapterMock.fetchAll).toHaveBeenCalledTimes(1);
+  });
+
+  it('save', () => {
+    adapterMock.setTarget.mockReturnThis();
+    adapterMock.save.mockReturnValue(true);
+
+    const repository = new TravelRouteRepository(adapterMock);
+
+    const result = repository.save({
+      from: 'ANY',
+      to: 'SOM',
+      price: 10,
+    });
+
+    expect(result).toEqual(true);
+    expect(adapterMock.setTarget).toHaveBeenCalledTimes(1);
+    expect(adapterMock.setTarget).toHaveBeenCalledWith('travel-routes.csv');
+    expect(adapterMock.save).toHaveBeenCalledTimes(1);
+    expect(adapterMock.save).toHaveBeenCalledWith('ANY,SOM,10');
+  });
+
+  it('Try to save with error - failed', () => {
+    const error = new Error('any error');
+    adapterMock.setTarget.mockReturnThis();
+    adapterMock.save.mockImplementation(() => {
+      throw error;
+    });
+
+    const repository = new TravelRouteRepository(adapterMock);
+    const result = repository.save({
+      from: 'ANY',
+      to: 'SOM',
+      price: 10,
+    });
+
+    expect(result).toEqual(false);
   });
 });

@@ -48,7 +48,11 @@ export class KeepLastPointPossibilitiesAlgorithm
       return;
     }
 
-    this.possibilities.push(firstPossibilities.direct);
+    const filteredList = this.removeDuplicatedPossibilitiesKeepingTheLast(
+        firstPossibilities.direct,
+    );
+
+    this.possibilities.push(filteredList);
 
     if (
       firstPossibilities.scale.length <= 0 &&
@@ -158,7 +162,11 @@ export class KeepLastPointPossibilitiesAlgorithm
 
     possibilitiesToIncrement.reverse();
 
-    this.possibilities.push(possibilitiesToIncrement);
+    const filteredList = this.removeDuplicatedPossibilitiesKeepingTheLast(
+        possibilitiesToIncrement,
+    );
+
+    this.possibilities.push(filteredList);
     delete this.incompleteScalePossibilities[incompleteStreamIndex];
   }
 
@@ -176,5 +184,27 @@ export class KeepLastPointPossibilitiesAlgorithm
     this.incompleteScalePossibilities[
         streamIndex
     ].push(currentRoute);
+  }
+
+  /**
+   * removeDuplicatedPossibilities method
+   * @param {array} possibilities
+   * @return {array}
+   */
+  removeDuplicatedPossibilitiesKeepingTheLast(possibilities) {
+    return possibilities.filter(
+        (possibility, index) => {
+          const nextPossibility = possibilities[index + 1];
+
+          if (!nextPossibility) {
+            return true;
+          }
+
+          return !(
+            possibility.from === nextPossibility.from &&
+            possibility.to === nextPossibility.to
+          );
+        },
+    );
   }
 }

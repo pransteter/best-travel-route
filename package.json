@@ -26,7 +26,8 @@
     "automock": false,
     "collectCoverageFrom": [
       "src/**/*.js",
-      "!**/src/api/**"
+      "!**/src/api/**",
+      "!**/src/scripts/**"
     ],
     "transform": {
       ".(js)": "@sucrase/jest-plugin"
