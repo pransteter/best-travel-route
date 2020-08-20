@@ -12,6 +12,8 @@ services:
     networks:
       travel_quotation_net:
         ipv4_address: 172.41.0.2
+    environment:
+      NODE_OPTIONS: --no-warnings
 networks:
   travel_quotation_net:
     driver: bridge

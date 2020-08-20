@@ -1,5 +1,5 @@
 const {TravelQuotation} = require(
-    '../../../src/contexts/travel-quotation/TravelQuotation'
+    '../../../src/contexts/travel-quotation/TravelQuotation',
 );
 
 describe('TraveQuotation context', () => {
@@ -32,7 +32,7 @@ describe('TraveQuotation context', () => {
     const to = 'BRC';
     repositoryMock.getAllRoutes.mockReturnValue(['GRU,BRC,10']);
     keepLastPointPossibilitiesAlgorithm.getPossibilities.mockReturnValue(
-        [{'GRU,BRC': 10}]
+        [{'GRU,BRC': 10}],
     );
     bestPriceElectionAlgorithm.getElected.mockReturnValue('GRU - BRC > $10');
 
@@ -52,9 +52,9 @@ describe('TraveQuotation context', () => {
         expect(() => {
           context.getBestQuotation();
         }).toThrowError(
-            'There is no possibilities algorithm to get possibilities.'
+            'There is no possibilities algorithm to get possibilities.',
         );
-      }
+      },
   );
 
   it(
@@ -66,9 +66,9 @@ describe('TraveQuotation context', () => {
         expect(() => {
           context.getBestQuotation();
         }).toThrowError(
-            'There is no election algorithm to get elected route.'
+            'There is no election algorithm to get elected route.',
         );
-      }
+      },
   );
 
   it(
@@ -80,8 +80,8 @@ describe('TraveQuotation context', () => {
         expect(() => {
           context.getBestQuotation();
         }).toThrowError(
-            'There is no possibilities algorithm to get possibilities.'
+            'There is no possibilities algorithm to get possibilities.',
         );
-      }
+      },
   );
 });

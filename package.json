@@ -4,9 +4,9 @@
   "description": "Travel Price Quotation is a simple app to quote wich is the best price to travel from an airport to another.",
   "main": "./src/api/index.js",
   "scripts": {
-    "start-api": "node ./src/api/index.js",
+    "start-api": "node ./src/api/index.js --no-warnings",
     "test": "jest --colors",
-    "get-best-travel-quotation": "node ./src/scripts/get-best-travel-quotation.js"
+    "get-best-travel-quotation": "node ./src/scripts/get-best-travel-quotation.js --no-warnings"
   },
   "author": "Romulo Pransteter da Silva",
   "license": "SEE LICENSE IN LICENSE.txt",
