@@ -46,14 +46,15 @@ if (!result.route || !result.route[0]) {
   process.exit();
 }
 
-const routeInSingleLine = result.route.reduce(
-    (previous, current) => {
-      if (typeof previous === 'object') {
-        return `${previous.from} - ${previous.to}`;
-      }
-      return `${previous} - ${current.to}`;
-    },
-);
+let routeInSingleLine = '';
+
+for (let i = 0; i < result.route.length; i++) {
+  const routeStretch = result.route[0];
+
+  routeInSingleLine += (i === 0) ?
+    `${routeStretch.from} - ${routeStretch.to}` :
+    ` - ${routeStretch.to}`;
+}
 
 console.log('best route:', routeInSingleLine, '>', result.price);
 process.exit();
